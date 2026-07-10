@@ -9,21 +9,20 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService {
 
-    private final UserRepository repository;
     private final PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
 
-    public UserService(UserRepository repository, PasswordEncoder passwordEncoder) {
-        this.repository = repository;
+    public UserService(PasswordEncoder passwordEncoder, UserRepository userRepository) {
+        this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
     }
 
     public User register(RegisterRequest request) {
-        if (repository.existsByEmail(request.email())) {
+        if (userRepository.existsByEmail(request.email())) {
             throw new RuntimeException("Email already exists");
         }
-
-        User user = new User(request.username(), request.email(), passwordEncoder.encode(request.password()))
-        return repository.save(user);
+        User user = new User(request.username(), request.email(), passwordEncoder.encode(request.password()));
+        return userRepository.save(user);
     }
 
 }
