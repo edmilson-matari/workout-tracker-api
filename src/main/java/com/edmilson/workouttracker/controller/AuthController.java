@@ -19,7 +19,7 @@ public class AuthController {
         return service.register(request);
     }
 
-    @GetMapping("/healtAuth")
+    @GetMapping("/health")
     public String healtAuth() {
         return "aut endpoint is working";
     }
